@@ -16,6 +16,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const Mail = require("./Routers/Mail");
 const data = require("./data.json");
+const pool = require("../db");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -53,6 +54,18 @@ app.get("/", (req, res) => {
   res.send("hello welcome ! ");
 });
 
+get("/db", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT * FROM test_table");
+    const results = { results: result ? result.rows : null };
+    res.render("pages/db", results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
 app.get("/api", (req, res) => {
   res.send(data);
 });
