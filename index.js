@@ -1,13 +1,21 @@
 const cool = require("cool-ascii-faces");
+// const express = require("express");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const morgan = require("morgan");
+// const cookieParser = require("cookie-parser");
+// const session = require("express-session");
+// // const Mail = require("./Routers/Mail");
+// const data = require("./data.json");
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-// const Mail = require("./Routers/Mail");
+const Mail = require("./Routers/Mail");
 const data = require("./data.json");
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -50,6 +58,22 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/cool", (req, res) => res.send(cool()));
+
+app.use("/partners", require("./Routers/Partnerts"));
+app.use("/publications", require("./Routers/Publication"));
+app.use("/lastPublications", require("./Routers/pub"));
+app.use("/archives", require("./Routers/Archment"));
+app.use("/resumes", require("./Routers/resume"));
+app.use("/api", Mail);
+app.use("/mail", require("./Routers/mailContact"));
+app.use("/contact", require("./Routers/Contact"));
+app.use("/pcms", require("./Routers/Pcms"));
+app.use("/openbravo", require("./Routers/Openbravo"));
+app.use("/download", require("./Routers/download"));
+app.use("/auth", require("./Routers/jwtAuth"));
+app.use("/dashboard", require("./Routers/Dashbroad"));
+app.use("/admin", require("./Routers/Admin"));
+app.use("/users", require("./Routers/users"));
 
 app.listen(PORT, () => {
   console.log(`listen on port ${PORT}`);
