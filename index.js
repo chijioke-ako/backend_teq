@@ -1,3 +1,4 @@
+const cool = require("cool-ascii-faces");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -8,7 +9,7 @@ const session = require("express-session");
 const data = require("./data.json");
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -47,6 +48,8 @@ app.get("/", (req, res) => {
 app.get("/api", (req, res) => {
   res.send(data);
 });
+
+app.get("/cool", (req, res) => res.send(cool()));
 
 app.listen(PORT, () => {
   console.log(`listen on port ${PORT}`);
